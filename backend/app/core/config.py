@@ -1,6 +1,5 @@
 from pydantic_settings import BaseSettings
-from typing import Optional
-import os
+from typing import Optional, List
 
 
 class Settings(BaseSettings):
@@ -21,20 +20,19 @@ class Settings(BaseSettings):
     # Redis (optional)
     REDIS_URL: Optional[str] = "redis://localhost:6379"
     
-    # CORS
-    ALLOWED_ORIGINS: list = [
-        "http://localhost:3000",
-        "http://localhost:5173",
-        "http://127.0.0.1:3000",
-        "http://127.0.0.1:5173"
-    ]
+    # CORS (comma-separated env var → list)
+    ALLOWED_ORIGINS: str = "http://localhost:3000,http://localhost:5173,http://127.0.0.1:3000,http://127.0.0.1:5173"
+    
+    @property
+    def allowed_origins(self) -> List[str]:
+        return [origin.strip() for origin in self.ALLOWED_ORIGINS.split(",") if origin.strip()]
     
     # Risk Assessment
     HIGH_RISK_THRESHOLD: float = 0.7
     MEDIUM_RISK_THRESHOLD: float = 0.4
     
     # Crisis Keywords (for basic detection)
-    CRISIS_KEYWORDS: list = [
+    CRISIS_KEYWORDS: List[str] = [
         "suicide", "kill myself", "end it all", "hurt myself", 
         "self harm", "want to die", "no point living", "cutting",
         "overdose", "jump off", "hanging", "rope"
