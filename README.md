@@ -125,7 +125,6 @@ mindmate/
 
 ---
 
-## 🎤 Pitch One-Liner
 > “While others stop at a chatbot, **MindMate creates a safe ecosystem** connecting students, AI, and counsellors — campus-first, culturally aware, and explainable.”
 
 ---
